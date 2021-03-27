@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import Header from './Header';
+import Features from './Features';
+import './materialtheme.css';
 
 export class Layout extends Component {
   static displayName = Layout.name;
 
   render () {
     return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
+      <div className="layout-style">
+        <Header/>
+        <Features/>
       </div>
     );
   }

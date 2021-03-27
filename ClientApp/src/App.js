@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-
 import './custom.css'
 
 export default class App extends Component {
@@ -10,9 +9,11 @@ export default class App extends Component {
 
   render () {
     return (
-      <Layout>
+      <div className="app-style">
+         <Layout>
         <Route exact path='/' component={Home} />
       </Layout>
+      </div>
     );
   }
 }
