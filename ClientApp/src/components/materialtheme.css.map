@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAWA,AAAA,WAAW,CAAA;EACP,SAAS,EAAE,CAAC;EACZ,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACf;;AAED,AAAA,aAAa,CAAA;EACT,SAAS,EAAE,CAAC;EACZ,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI;EACX,gBAAgB,EAAE,WAAW;EAC7B,gBAAgB,EAAE,qDAAqD;CAC1E",
+    "sources": [
+        "materialtheme.scss"
+    ],
+    "names": [],
+    "file": "materialtheme.css"
+}
