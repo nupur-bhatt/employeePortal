@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import BackgroundImage from './header.jpg';
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 
 const headerStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +27,6 @@ const headerStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     alignSelf: 'flex-end',
-    marginLeft: theme.spacing(2),
     padding: theme.spacing(1),
     fontFamily: ['Josefin Sans'],
     fontWeight: 100,
@@ -47,9 +48,11 @@ export default function Header() {
       <AppBar position="static" style={{backgroundColor:"transparent"}}>
         <Toolbar className={classes.toolbar}>
           <Typography className={classes.title} variant="h5" noWrap>Employee Management Portal</Typography>
+          <Link component={RouterLink} to='/employees' style={{textDecoration:"none"}}>
           <IconButton className={classes.iconbutton} aria-label="employee" color="inherit">
             <SupervisorAccountIcon />
           </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
