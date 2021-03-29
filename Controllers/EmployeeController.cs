@@ -20,12 +20,14 @@ namespace employeePortal.Controllers{
         };
 
         //GET: api/<EmployeeController>
+         [Route("/api/employee")]
         [HttpGet]
         public ActionResult<IEnumerable<Employee>> Get(){
             return employeeList;
         }
 
         //GET api/<EmployeeController>/5
+        [Route("/api/employee")]
         [HttpGet("{id}")]
         public ActionResult<Employee> Get(int id){
 
@@ -45,12 +47,29 @@ namespace employeePortal.Controllers{
 
         //PUT api/<EmployeeController>/5
         [HttpPut("{id}")]
-        public void put(int id, [FromBody] string value){
+        public ActionResult<IEnumerable<Employee>> Put(Employee newEmployee){
+
+            Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == newEmployee.Id);
+            empresult.Id = newEmployee.Id;
+            empresult.FirstName = newEmployee.FirstName;
+            empresult.LastName = newEmployee.LastName;
+            empresult.Designation = newEmployee.Designation;
+            empresult.DepartmentId = newEmployee.DepartmentId;
+            empresult.OfficeId = newEmployee.OfficeId;
+            return employeeList;
+
         }
 
         //DELETE api/<EmployeeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id){
+        public ActionResult<IEnumerable<Employee>> Delete(int id){
+
+            Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == id);
+            if(empresult == null){
+                return NotFound(new {Message = "Employee not found. Try again!"});
+            }
+            employeeList.Remove(empresult);
+            return Ok(employeeList);
 
         }
     }
