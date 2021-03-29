@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/54958e37-2326-47d4-ac39-5588de5064bd/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/employeePortalDemo",
+    "appService.deploySubpath": "publish"
+}
