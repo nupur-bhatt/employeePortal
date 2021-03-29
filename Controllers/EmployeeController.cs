@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
 using employeePortal.Models;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace employeePortal.Controllers{
 
@@ -13,14 +11,14 @@ namespace employeePortal.Controllers{
     public class EmployeeController: ControllerBase{
 
         private List<Employee> employeeList = new List<Employee>{
-            new Employee { Id = 1, FirstName = "Luke", LastName = "Skywalker", Designation="Manager", DepartmentId = 5, OfficeId = 6 },
-            new Employee { Id = 2, FirstName = "Han", LastName = "Solo", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
-            new Employee { Id = 3, FirstName = "Leia", LastName = "Organa", Designation="Team Leader", DepartmentId = 4, OfficeId = 6 },
-            new Employee { Id = 4, FirstName = "Rey", LastName = "Skywalker", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
+            new Employee { Id = 11, FirstName = "Luke", LastName = "Skywalker", Designation="Manager", DepartmentId = 5, OfficeId = 6 },
+            new Employee { Id = 22, FirstName = "Han", LastName = "Solo", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
+            new Employee { Id = 33, FirstName = "Leia", LastName = "Organa", Designation="Team Leader", DepartmentId = 4, OfficeId = 6 },
+            new Employee { Id = 44, FirstName = "Rey", LastName = "Skywalker", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
         };
 
         //GET: api/<EmployeeController>
-         [Route("/api/employee")]
+        [Route("/api/employee")]
         [HttpGet]
         public ActionResult<IEnumerable<Employee>> Get(){
             return employeeList;
