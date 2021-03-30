@@ -42,11 +42,11 @@ class EmployeeList extends Component {
           {this.state.rows.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">{row.id}</TableCell>
-              <TableCell align="right">{row.firstName}</TableCell>
-              <TableCell align="right">{row.lastName}</TableCell>
+              <TableCell align="right">{row.first_name}</TableCell>
+              <TableCell align="right">{row.last_name}</TableCell>
               <TableCell align="right">{row.designation}</TableCell>
-              <TableCell align="right">{row.departmentId}</TableCell>
-              <TableCell align="right">{row.officeId}</TableCell>
+              <TableCell align="right">{row.department_id}</TableCell>
+              <TableCell align="right">{row.office_id}</TableCell>
             </TableRow>
           ))}
         </TableBody>

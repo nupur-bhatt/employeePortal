@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using employeePortal.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace employeePortal.Controllers{
 
@@ -10,66 +10,65 @@ namespace employeePortal.Controllers{
     [ApiController]
     public class EmployeeController: ControllerBase{
 
-        private List<Employee> employeeList = new List<Employee>{
-            new Employee { Id = 11, FirstName = "Luke", LastName = "Skywalker", Designation="Manager", DepartmentId = 5, OfficeId = 6 },
-            new Employee { Id = 22, FirstName = "Han", LastName = "Solo", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
-            new Employee { Id = 33, FirstName = "Leia", LastName = "Organa", Designation="Team Leader", DepartmentId = 4, OfficeId = 6 },
-            new Employee { Id = 44, FirstName = "Rey", LastName = "Skywalker", Designation="Employee", DepartmentId = 2, OfficeId = 6 },
-        };
+        private readonly EmployeeContext _context;
+
+        public EmployeeController(EmployeeContext context){
+            _context = context;
+        }
 
         //GET: api/<EmployeeController>
         [Route("/api/employee")]
         [HttpGet]
-        public ActionResult<IEnumerable<Employee>> Get(){
-            return employeeList;
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees(){
+            return await _context.Employees.ToListAsync();
         }
 
         //GET api/<EmployeeController>/5
         [Route("/api/employee")]
         [HttpGet("{id}")]
-        public ActionResult<Employee> Get(int id){
+        public async Task<ActionResult<Employee>> GetEmployee(int id){
 
-            Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == id);
-            if(empresult == null){
-                return NotFound(new {Message = "Employee not found. Try again!"});
+            var employee = await _context.Employees.FindAsync(id);
+            if(employee==null){
+                return NotFound();
             }
-            return Ok(empresult);
+            return employee;
         }
 
         //POST api/<EmployeeController>
-        [HttpPost]
-        public ActionResult<IEnumerable<Employee>> Post(Employee newEmployee){   
-            employeeList.Add(newEmployee);
-            return employeeList;
-        }
+        // [HttpPost]
+        // public ActionResult<IEnumerable<Employee>> Post(Employee newEmployee){   
+        //     employeeList.Add(newEmployee);
+        //     return employeeList;
+        // }
 
-        //PUT api/<EmployeeController>/5
-        [HttpPut("{id}")]
-        public ActionResult<IEnumerable<Employee>> Put(Employee newEmployee){
+        // //PUT api/<EmployeeController>/5
+        // [HttpPut("{id}")]
+        // public ActionResult<IEnumerable<Employee>> Put(Employee newEmployee){
 
-            Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == newEmployee.Id);
-            empresult.Id = newEmployee.Id;
-            empresult.FirstName = newEmployee.FirstName;
-            empresult.LastName = newEmployee.LastName;
-            empresult.Designation = newEmployee.Designation;
-            empresult.DepartmentId = newEmployee.DepartmentId;
-            empresult.OfficeId = newEmployee.OfficeId;
-            return employeeList;
+        //     Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == newEmployee.Id);
+        //     empresult.Id = newEmployee.Id;
+        //     empresult.FirstName = newEmployee.FirstName;
+        //     empresult.LastName = newEmployee.LastName;
+        //     empresult.Designation = newEmployee.Designation;
+        //     empresult.DepartmentId = newEmployee.DepartmentId;
+        //     empresult.OfficeId = newEmployee.OfficeId;
+        //     return employeeList;
 
-        }
+        // }
 
-        //DELETE api/<EmployeeController>/5
-        [HttpDelete("{id}")]
-        public ActionResult<IEnumerable<Employee>> Delete(int id){
+        // //DELETE api/<EmployeeController>/5
+        // [HttpDelete("{id}")]
+        // public ActionResult<IEnumerable<Employee>> Delete(int id){
 
-            Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == id);
-            if(empresult == null){
-                return NotFound(new {Message = "Employee not found. Try again!"});
-            }
-            employeeList.Remove(empresult);
-            return Ok(employeeList);
+        //     Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == id);
+        //     if(empresult == null){
+        //         return NotFound(new {Message = "Employee not found. Try again!"});
+        //     }
+        //     employeeList.Remove(empresult);
+        //     return Ok(employeeList);
 
-        }
+        // }
     }
 
 }
