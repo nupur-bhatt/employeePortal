@@ -35,40 +35,56 @@ namespace employeePortal.Controllers{
             return employee;
         }
 
-        //POST api/<EmployeeController>
-        // [HttpPost]
-        // public ActionResult<IEnumerable<Employee>> Post(Employee newEmployee){   
-        //     employeeList.Add(newEmployee);
-        //     return employeeList;
-        // }
+        // POST api/<EmployeeController>
+        [HttpPost]
+        public async Task<ActionResult<Employee>> PostEmployee(Employee newEmployee){   
+            
+            var employee = await _context.Employees.FindAsync(newEmployee.id);
+            if(employee==null){
+                _context.Employees.Add(newEmployee);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetEmployee", new {id = newEmployee.id}, newEmployee);
+            }
+            return BadRequest();
+        }
 
-        // //PUT api/<EmployeeController>/5
-        // [HttpPut("{id}")]
-        // public ActionResult<IEnumerable<Employee>> Put(Employee newEmployee){
+        //PUT api/<EmployeeController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEmployee(int id, Employee newEmployee){
+            
+            var employee_to_change = await _context.Employees.FindAsync(id);
+            if(employee_to_change == null){
+                return NotFound();
+            }
+            else{
+                try{
+                    employee_to_change.first_name = newEmployee.first_name;
+                    employee_to_change.last_name = newEmployee.last_name;
+                    employee_to_change.designation = newEmployee.designation;
+                    employee_to_change.department_id = newEmployee.department_id;
+                    employee_to_change.office_id = newEmployee.office_id;
+                    _context.SaveChanges();
+                    return Ok(newEmployee);
+                }
+                catch(DbUpdateException){
+                    throw;
+                }
+            }
+        }
 
-        //     Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == newEmployee.Id);
-        //     empresult.Id = newEmployee.Id;
-        //     empresult.FirstName = newEmployee.FirstName;
-        //     empresult.LastName = newEmployee.LastName;
-        //     empresult.Designation = newEmployee.Designation;
-        //     empresult.DepartmentId = newEmployee.DepartmentId;
-        //     empresult.OfficeId = newEmployee.OfficeId;
-        //     return employeeList;
+        //DELETE api/<EmployeeController>/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(int id){
 
-        // }
+            var empstatus = await _context.Employees.FindAsync(id);
+            if(empstatus==null){
+                return NotFound();
+            }
 
-        // //DELETE api/<EmployeeController>/5
-        // [HttpDelete("{id}")]
-        // public ActionResult<IEnumerable<Employee>> Delete(int id){
-
-        //     Employee empresult = employeeList.FirstOrDefault(employee => employee.Id == id);
-        //     if(empresult == null){
-        //         return NotFound(new {Message = "Employee not found. Try again!"});
-        //     }
-        //     employeeList.Remove(empresult);
-        //     return Ok(employeeList);
-
-        // }
+            _context.Employees.Remove(empstatus);
+            await _context.SaveChangesAsync();
+            return empstatus;
+        }
     }
 
 }
