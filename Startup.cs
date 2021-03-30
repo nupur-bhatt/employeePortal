@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using employeePortal.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace employeePortal
 {
@@ -20,8 +21,24 @@ namespace employeePortal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+        
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://example.com",
+                                            "http://localhost:5000",
+                                            "https://localhost:5000",
+                                            "http://localhost:5001",
+                                            "https://localhost:5001",
+                                            "http://www.contoso.com");
+                    });
+            });
 
             services.AddControllersWithViews();
+
+            services.AddDbContext<EmployeeContext>(options => options.UseSqlServer("Server=tcp:employee-portal.database.windows.net,1433;Initial Catalog=employee-database;Persist Security Info=False;User ID=admindb;Password=AdminEmployee4848@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -44,6 +61,7 @@ namespace employeePortal
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
