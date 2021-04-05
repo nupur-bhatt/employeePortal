@@ -38,14 +38,14 @@ namespace employeePortal.Controllers{
         // POST api/<EmployeeController>
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee newEmployee){   
-            
-            var employee = await _context.Employees.FindAsync(newEmployee.id);
-            if(employee==null){
+            try{
                 _context.Employees.Add(newEmployee);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetEmployee", new {id = newEmployee.id}, newEmployee);
+                return Ok(newEmployee);
             }
-            return BadRequest();
+            catch(DbUpdateException){
+                return BadRequest();
+            }
         }
 
         //PUT api/<EmployeeController>/5
@@ -80,11 +80,9 @@ namespace employeePortal.Controllers{
             if(empstatus==null){
                 return NotFound();
             }
-
             _context.Employees.Remove(empstatus);
             await _context.SaveChangesAsync();
             return empstatus;
         }
     }
-
 }
