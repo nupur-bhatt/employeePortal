@@ -93,14 +93,12 @@ class EmployeeOperations extends Component {
       axios.post('https://employeeportaldemo.azurewebsites.net/api/employee/',this.state.employee)
       .then(res => {
         console.log(res.data);
-        return <Redirect to="/employees"/>
+        window.location.reload();
       })
       .catch(error =>{
         console.log(error.res);
       });
     }
-
-
 
   //UPDATE EMPLOYEE
 
@@ -138,21 +136,28 @@ class EmployeeOperations extends Component {
   handleUpdateEmployee(event){
     console.log(this.state.employeeUpdate);
     console.log(this.state.employeeUpdate.id_up);
-    axios.request({
-      url: `https://employeeportaldemo.azurewebsites.net/api/employee/${this.state.employeeUpdate.id_up}`,
-      method: 'put',
-      data : {
+
+    const employeeUp = {
         "id":this.state.employeeUpdate.id_up,
         "first_name":this.state.employeeUpdate.first_name_up,
         "last_name":this.state.employeeUpdate.last_name_up,
         "designation":this.state.employeeUpdate.designation_up,
-        "department_id":this.state.employeeUpdate.department_id,
+        "department_id":this.state.employeeUpdate.department_id_up,
         "office_id":this.state.employeeUpdate.office_id_up
-      },
+    }
+
+    axios.request({
+      url: `https://employeeportaldemo.azurewebsites.net/api/employee/${this.state.employeeUpdate.id_up}`,
+      method: 'put',
+      data : employeeUp,
     })
     .then(res => {
+      console.log(employeeUp);
       console.log(res);
-      return <Redirect to="/employees"/>
+      window.location.reload();
+    }).catch(err =>{
+      console.log(employeeUp);
+      console.log(err);
     });
   }
 
@@ -170,7 +175,7 @@ class EmployeeOperations extends Component {
     axios.delete(`https://employeeportaldemo.azurewebsites.net/api/employee/${this.state.employeeDelete.id_de}`,this.state.employeeDelete)
     .then(res => {
       console.log(res);
-      return <Redirect to="/employees"/>
+      window.location.reload();
     })
   }
 
@@ -179,27 +184,27 @@ class EmployeeOperations extends Component {
       <div style={{marginBottom:"2em"}}>
       <ThemeProvider theme={theme}>
     <form className={useStyles.root} noValidate autoComplete="off">
-        <TextField id="first_name" label="First Name" variant="outlined" color="primary" value={this.state.employee.first_name} onChange={this.handleFirstNameChange.bind(this)}/>
-        <TextField id="last_name" label="Last Name" variant="outlined" value={this.state.employee.last_name} onChange={this.handleLastNameChange.bind(this)}/>
-        <TextField id="designation" label="Designation" variant="outlined" value={this.state.employee.designation} onChange={this.handleDesignationChange.bind(this)}/>
-        <TextField id="department_id" label="Department ID" variant="outlined" value={this.state.employee.department_id} onChange={this.handleDepartmentIdChange.bind(this)}/>
-        <TextField id="office_id" label="Office ID" variant="outlined" value={this.state.employee.office_id} onChange={this.handleOfficeIdChange.bind(this)}/>
-        <Button size="large" variant="outlined" style={{margin:"1em"}} color="primary" onClick={this.handleAddEmployee.bind(this)}>Add</Button>
+        <TextField id="first_name" label="First Name" variant="outlined" color="primary" value={this.state.employee.first_name} onChange={this.handleFirstNameChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="last_name" label="Last Name" variant="outlined" value={this.state.employee.last_name} onChange={this.handleLastNameChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="designation" label="Designation" variant="outlined" value={this.state.employee.designation} onChange={this.handleDesignationChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="department_id" label="Department ID" variant="outlined" value={this.state.employee.department_id} onChange={this.handleDepartmentIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="office_id" label="Office ID" variant="outlined" value={this.state.employee.office_id} onChange={this.handleOfficeIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <Button size="large" variant="outlined" style={{margin:"0.5em"}} color="primary" onClick={this.handleAddEmployee.bind(this)}>Add</Button>
     </form>
 
     <form className={useStyles.root} noValidate autoComplete="off">
-        <TextField id="id_update" label="Employee ID" variant="outlined" color="primary" value={this.state.employee.id_up} onChange={this.handleUIdChange.bind(this)} />
-        <TextField id="fname_update" label="First Name" variant="outlined" value={this.state.employee.first_name_up} onChange={this.handleUFirstNameChange.bind(this)}/>
-        <TextField id="lname_update" label="Last Name" variant="outlined" value={this.state.employee.last_name_up} onChange={this.handleULastNameChange.bind(this)}/>
-        <TextField id="designation_update" label="Designation" variant="outlined" value={this.state.employee.designation_up} onChange={this.handleUDesignationChange.bind(this)}/>
-        <TextField id="depid_update" label="Department ID" variant="outlined" value={this.state.employee.department_id_up} onChange={this.handleUDepartmentIdChange.bind(this)}/>
-        <TextField id="offid_update" label="Office ID" variant="outlined" value={this.state.employee.office_id_up} onChange={this.handleUOfficeIdChange.bind(this)}/>
-        <Button size="large" variant="outlined" style={{margin:"1em"}} color="primary" onClick={this.handleUpdateEmployee.bind(this)}>Update</Button>
+        <TextField id="id_update" label="Employee ID" variant="outlined" color="primary" value={this.state.employee.id_up} onChange={this.handleUIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="fname_update" label="First Name" variant="outlined" value={this.state.employee.first_name_up} onChange={this.handleUFirstNameChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="lname_update" label="Last Name" variant="outlined" value={this.state.employee.last_name_up} onChange={this.handleULastNameChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="designation_update" label="Designation" variant="outlined" value={this.state.employee.designation_up} onChange={this.handleUDesignationChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="depid_update" label="Department ID" variant="outlined" value={this.state.employee.department_id_up} onChange={this.handleUDepartmentIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <TextField id="offid_update" label="Office ID" variant="outlined" value={this.state.employee.office_id_up} onChange={this.handleUOfficeIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <Button size="large" variant="outlined" style={{margin:"0.5em"}} color="primary" onClick={this.handleUpdateEmployee.bind(this)}>Update</Button>
     </form>
 
     <form className={useStyles.root} noValidate autoComplete="off">
-        <TextField id="id_delete" label="Employee ID" variant="outlined" color="primary" value={this.state.employee.id_de} onChange={this.handleDIdChange.bind(this)}/>
-        <Button size="large" variant="outlined" style={{margin:"1em"}} color="primary" onClick={this.handleDeleteEmployee.bind(this)}>Delete</Button>
+        <TextField id="id_delete" label="Employee ID" variant="outlined" color="primary" value={this.state.employee.id_de} onChange={this.handleDIdChange.bind(this)} style={{margin:"0.5em"}}/>
+        <Button size="large" variant="outlined" style={{margin:"0.5em"}} color="primary" onClick={this.handleDeleteEmployee.bind(this)}>Delete</Button>
     </form>
     </ThemeProvider>
     </div>
