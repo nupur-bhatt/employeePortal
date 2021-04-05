@@ -21,7 +21,6 @@ namespace employeePortal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-        
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -32,7 +31,10 @@ namespace employeePortal
                                             "https://localhost:5000",
                                             "http://localhost:5001",
                                             "https://localhost:5001",
-                                            "http://www.contoso.com");
+                                            "http://www.contoso.com",
+                                            "https://employeeportaldemo.azurewebsites.net")
+                                            .AllowAnyHeader().AllowAnyMethod()
+                                            .AllowAnyOrigin();
                     });
             });
 
